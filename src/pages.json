@@ -1,10 +1,17 @@
 {
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      // uni-ui 规则如下配置
+      "^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
+    }
+  },
   "pages": [
     //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
     {
       "path": "pages/home/home",
       "style": {
-        "navigationBarTitleText": "首页"
+        "navigationStyle": "custom"
       }
     },
     {
@@ -21,41 +28,39 @@
     }
   ],
   "globalStyle": {
-		// 导航栏文字颜色全局配置
-    "navigationBarTextStyle": "white",
-    "navigationBarBackgroundColor": "#C00000",
-		// 下拉刷新背景颜色全局配置
+    // 导航栏文字颜色全局配置
+    // 下拉刷新背景颜色全局配置
     "backgroundColor": "#F8F8F8",
     "backgroundTextStyle": "light"
   },
   "tabBar": {
     "color": "#000",
-    "selectedColor": "#d81e06",
+    "selectedColor": "#27ba9b",
     "borderStyle": "white",
     "list": [
       {
         "pagePath": "pages/home/home",
         "text": "首页",
-        "iconPath": "static/tab_icons/home.png",
-        "selectedIconPath": "static/tab_icons/home-active.png"
+        "iconPath": "static/tabs/home_default.png",
+        "selectedIconPath": "static/tabs/home_selected.png"
       },
       {
         "pagePath": "pages/cate/cate",
         "text": "分类",
-        "iconPath": "static/tab_icons/cate.png",
-        "selectedIconPath": "static/tab_icons/cate-active.png"
+        "iconPath": "static/tabs/category_default.png",
+        "selectedIconPath": "static/tabs/category_selected.png"
       },
       {
         "pagePath": "pages/cart/cart",
         "text": "购物车",
-        "iconPath": "static/tab_icons/cart.png",
-        "selectedIconPath": "static/tab_icons/cart-active.png"
+        "iconPath": "static/tabs/cart_default.png",
+        "selectedIconPath": "static/tabs/cart_selected.png"
       },
       {
         "pagePath": "pages/my/my",
         "text": "我的",
-        "iconPath": "static/tab_icons/my.png",
-        "selectedIconPath": "static/tab_icons/my-active.png"
+        "iconPath": "static/tabs/user_default.png",
+        "selectedIconPath": "static/tabs/user_selected.png"
       }
     ]
   }
