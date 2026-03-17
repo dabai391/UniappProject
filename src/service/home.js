@@ -8,3 +8,15 @@ export const getBannerList = (distributionSite=1) => {
     },
   });
 }
+export const getCategoryList = () => {
+  return http({
+    url: "/home/category/mutli",
+    method: "GET",
+  });
+}
+export const getHotList = () => {
+  return http({
+    url: "/home/hot/mutli",
+    method: "GET",
+  });
+}

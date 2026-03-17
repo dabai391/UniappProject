@@ -38,7 +38,7 @@
   "tabBar": {
     "color": "#000",
     "selectedColor": "#27ba9b",
-    "borderStyle": "white",
+    "borderStyle": "black",
     "list": [
       {
         "pagePath": "pages/home/home",

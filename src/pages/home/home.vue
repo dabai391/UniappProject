@@ -1,23 +1,39 @@
 <template>
  <CustomNavbar/>
  <XtxSwiper :list="bannerlist"/>
+ <CategoryPanel :list="categorylist"/>
+ <HotPanel :list="hotlist"/>
 </template>
 <script setup>
-import useUserStore  from "@/store/index.js"
 import CustomNavbar from "./components/CustomNavbar.vue";
-import { getBannerList } from "@/service/home.js"
+import { getBannerList, getCategoryList, getHotList } from "@/service/home.js"
 import { onLoad } from "@dcloudio/uni-app";
 import { ref } from "vue"
-const userStore = useUserStore()
+import CategoryPanel from "./components/CategoryPanel.vue"
+import HotPanel from "./components/HotPanel.vue"
 const bannerlist=ref([])
 const getBanner=async()=>{
   const res=await getBannerList()
   bannerlist.value=res.result
 }
+const categorylist=ref([])
+const getCategory=async()=>{
+  const res=await getCategoryList()
+  categorylist.value=res.result
+}
+const hotlist=ref([])
+const getHot=async()=>{
+  const res=await getHotList()
+  hotlist.value=res.result
+}
 onLoad(()=>{
-  getBanner()
+  getBanner(),
+  getCategory(),
+  getHot()
 })
 </script>
-<style scoped >
-
+<style scoped lang="scss" >
+page{
+  background-color: #aaa8a8;
+}
 </style>
