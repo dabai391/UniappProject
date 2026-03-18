@@ -17,7 +17,10 @@
 .container {
   background-color: #00c09d;
   width: 100%;
-
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
   .header {
     padding-top: 100rpx;
     padding-left: 30rpx;

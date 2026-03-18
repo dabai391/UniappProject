@@ -20,3 +20,13 @@ export const getHotList = () => {
     method: "GET",
   });
 }
+export const getGuessList = ({page=1,pageSize=10}) => {
+  return http({
+    url: "/home/goods/guessLike",
+    method: "GET",
+    data:{
+      page,
+      pageSize
+    }
+  });
+}
