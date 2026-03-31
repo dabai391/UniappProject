@@ -2,7 +2,7 @@
   <CustomNavbar />
   <HomeSkeleton v-if="isLoading" />
   <scroll-view scroll-y class="scroll" style="margin-top: 270rpx;" @scrolltolower="getMore" refresher-enabled
-    @refresherrefresh="refresh" :refresher-triggered="isTriggered" v-else>
+    @refresherrefresh="refresh" :refresher-triggered="isTriggered" v-else >
     <XtxSwiper :list="bannerlist" />
     <CategoryPanel :list="categorylist" />
     <HotPanel :list="hotlist" />

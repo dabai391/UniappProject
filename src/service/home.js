@@ -1,10 +1,10 @@
 import { http } from "@/util/http.js";
-export const getBannerList = (distributionSite=1) => {
+export const getBannerList = () => {
   return http({
     url: "/home/banner",
     method: "GET",
     data: {
-      distributionSite
+      distributionSite: 1
     },
   });
 }

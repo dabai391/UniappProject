@@ -2,9 +2,15 @@
   <view class="hot-panel">
     <view class="hot-item" v-for="(item) in props.list" :key="item.id">
       <view class="title">{{ item.title }}<text>{{ item.alt }}</text></view>
-      <view class="image" >
-        <image v-for="i in item.pictures " :src="i" :key="i"></image>
-      </view>
+      <navigator
+        :url="`/pages/hot/hot?type=${item.type}`"
+        open-type="navigate"
+        hover-class="navigator-hover"
+      >
+        <view class="image">
+          <image v-for="i in item.pictures" :src="i" :key="i"></image>
+        </view>
+      </navigator>
     </view>
   </view>
 </template>
