@@ -1,4 +1,4 @@
-import useUserStore from "@/store/index.js";
+import useUserStore from "@/store/userStore.js";
 const baseUrl = "https://pcapi-xiaotuxian-front-devtest.itheima.net";
 // 请求前拦截
 const httpInterceptor = {

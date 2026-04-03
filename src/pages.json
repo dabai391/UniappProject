@@ -30,7 +30,7 @@
     },
     {
       "path": "pages/my/my",
-      "style": { "navigationBarTitleText": "我的" ,"navigationBarBackgroundColor":"#fff"}
+      "style": { "navigationBarTitleText": "我的" ,"navigationStyle":"custom","navigationBarTextStyle": "white"}
     },
     {
       "path": "pages/hot/hot",
@@ -43,8 +43,49 @@
         "navigationBarBackgroundColor": "#fff",
         "navigationBarTextStyle": "black"
       }
+    },
+    {
+      "path": "pages/my/components/Login",
+      "style": {
+        "navigationBarTitleText": "登录",
+        "navigationBarBackgroundColor": "#fff",
+        "navigationBarTextStyle": "black"
+      }
     }
   ],
+  //分包加载规则
+  "subPackages": [
+    {
+      "root": "pagesMember",
+      "pages": [
+       {
+        "path": "settings/Setting",
+        "style": {
+          "navigationBarTitleText": "设置",
+          "navigationBarBackgroundColor": "#fff",
+          "navigationBarTextStyle": "black"
+        }
+       },
+       {
+        "path": "userinfo/UserInfo",
+        "style": {
+          "navigationStyle": "custom",
+          "navigationBarBackgroundColor": "#fff"
+        }
+       }
+      ]
+    }
+
+  ],
+  // 分包预下载规则
+	"preloadRule": {
+		"pages/my/my": {
+			"network": "all",
+			"packages": [
+				"pagesMember"
+			]
+		}
+	},
   "globalStyle": {
     // 导航栏文字颜色全局配置
     // 下拉刷新背景颜色全局配置

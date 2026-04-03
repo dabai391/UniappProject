@@ -19,6 +19,7 @@ const useUserStore = defineStore(
     };
   },
   {
+    // 小程序开启持久化
     persist: {
       storage: {
         setItem(key, value) {

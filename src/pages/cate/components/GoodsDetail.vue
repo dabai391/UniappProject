@@ -82,7 +82,7 @@
     <view class="goods">
       <navigator v-for="i in goodsDetail.similarProducts" :key="i.id"
         :url="`/pages/cate/components/GoodsDetail?id=${i.id}`" class="goodsitem">
-        <image class="image" :src="i.picture" mode="widthFill"></image>
+        <image class="image" :src="i.picture"></image>
         <view class="name">{{ i.name }}</view>
         <view class="price">￥{{ i.price }}</view>
       </navigator>
@@ -275,22 +275,21 @@ onLoad(async () => {
     .goods {
       display: flex;
       flex-wrap: wrap;
-      gap: 20rpx;
 
       .goodsitem {
-        width: calc(25% - 15rpx);
+        width: calc(33.333% - 20rpx);
+        margin: 0 10rpx 20rpx;
         display: flex;
         flex-direction: column;
         align-items: center;
-        text-align: center;
-        margin-bottom: 20rpx;
         background-color: #fff;
         border-radius: 10rpx;
         padding: 15rpx;
+        box-sizing: border-box;
 
         .image {
           width: 100%;
-          height: 120rpx;
+          height: 200rpx;
           border-radius: 10rpx;
         }
 
@@ -299,12 +298,19 @@ onLoad(async () => {
           font-size: 24rpx;
           color: #333;
           line-height: 1.3;
+          width: 100%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
         }
 
         .price {
           margin-top: 10rpx;
           font-size: 26rpx;
           color: #ff4444;
+          width: 100%;
         }
       }
     }

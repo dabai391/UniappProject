@@ -15,14 +15,13 @@
           <view class="subcategory" v-for="item in categorylist[curIndex]?.children" :key="item.id">
             <text class="title">{{ item.name }}</text>
             <text class="more">全部</text>
-              <view  v-for="i in item.goods" :key="i.id"
-              class="goodsitem">
-                <navigator :url="`/pages/cate/components/GoodsDetail?id=${i.id}`" 
-                 class="goods">
-                  <image class="image" :src="i.picture" mode="widthFill"></image>
-                  <view class="name">{{ i.name }}</view>
-                  <view class="price">￥{{ i.price }}</view>
-                </navigator>
+            <view class="goodslist">
+              <navigator v-for="i in item.goods" :key="i.id" :url="`/pages/cate/components/GoodsDetail?id=${i.id}`"
+                class="goods">
+                <image class="image" :src="i.picture" mode="widthFill"></image>
+                <view class="name">{{ i.name }}</view>
+                <view class="price">￥{{ i.price }}</view>
+              </navigator>
             </view>
           </view>
         </scroll-view>
@@ -125,36 +124,47 @@ onLoad(async () => {
         right: 30rpx;
       }
 
-      .goodsitem {
-        width: 100%;
+      .goodslist {
         display: flex;
-        margin-top: 20rpx;
-        background-color: #fff;
-        border-radius: 10rpx;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        padding: 0 10rpx;
+
         .goods {
-          width: 40%;
+          width: calc(33.33% - 20rpx);
+          margin: 10rpx;
           display: flex;
           flex-direction: column;
           align-items: center;
           text-align: center;
-        }
-        image {
-          width: 100rpx;
-          height: 100rpx;
+          background-color: #fff;
           border-radius: 10rpx;
-        }
+          padding: 15rpx;
+          box-sizing: border-box;
 
-        .name {
-          margin-top: 10rpx;
-          font-size: 24rpx;
-          color: #333;
-          line-height: 1.3;
-        }
+          .image {
+            width: 100%;
+            height: 160rpx;
+            border-radius: 10rpx;
+          }
 
-        .price {
-          margin-top: 10rpx;
-          font-size: 26rpx;
-          color: #ff4444;
+          .name {
+            margin-top: 10rpx;
+            font-size: 24rpx;
+            color: #333;
+            line-height: 1.3;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+          }
+
+          .price {
+            margin-top: 10rpx;
+            font-size: 26rpx;
+            color: #ff4444;
+          }
         }
       }
     }

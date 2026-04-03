@@ -1,7 +1,9 @@
 <template>
   <view class="xtu-guess">
     <view class="title">
+      <image src="/static/images/bubble.png" mode="aspectFill"></image>
       <text>猜你喜欢</text>
+      <image src="/static/images/bubble.png" mode="aspectFill"></image>
     </view>
     <view class="guess-list">
       <view class="guess-item" v-for="item in guesslist" :key="item.id">
@@ -97,7 +99,17 @@ defineExpose({
   width: 100%;
   padding: 0 20rpx;
   box-sizing: border-box;
-
+  .title{
+    font-size: 36rpx;
+    color: #333;
+    padding: 30rpx 0;
+    text-align: center;
+    image{
+      width: 30rpx;
+      height: 30rpx;
+      margin: 0 10rpx;
+    }
+  }
   .guess-list {
     width: 100%;
     display: flex;
