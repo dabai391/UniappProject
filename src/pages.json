@@ -72,6 +72,21 @@
           "navigationStyle": "custom",
           "navigationBarBackgroundColor": "#fff"
         }
+       },
+       {
+        "path": "address/Address",
+        "style": {
+          "navigationBarTitleText": "地址管理",
+          "navigationBarBackgroundColor": "#fff",
+          "navigationBarTextStyle": "black"
+        }
+       },
+       {
+        "path": "address/EditAdress",
+        "style": {
+          "navigationBarBackgroundColor": "#fff",
+          "navigationBarTextStyle": "black"
+        }
        }
       ]
     }

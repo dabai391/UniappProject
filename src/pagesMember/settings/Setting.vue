@@ -1,6 +1,6 @@
 <template>
   <view class="setting">
-    <view class="address" v-if="userStore.userInfo.token">我的收货地址</view>
+    <view class="address" v-if="userStore.userInfo.token" @tap="handleAddress">我的收货地址</view>
     <view class="connect">
       <view>授权管理</view>
       <view>问题管理</view>
@@ -42,6 +42,11 @@ const handleLogout = () => {
     }
   });
   
+}
+const handleAddress = () => {
+  uni.navigateTo({
+    url: '/pagesMember/address/Address'
+  })
 }
 </script>
 <style>
