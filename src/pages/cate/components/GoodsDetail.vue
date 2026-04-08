@@ -29,15 +29,30 @@
 
       <!-- 配送信息 -->
       <view class="delivery-info">
-        <view class="info-item">
-          <text>颜色分类：</text>
-          <text>随机发货（雨花粉+晴雨蓝+马卡龙蓝+雾霾蓝）</text>
+        <view class="info-item" @tap="openSkuPopup(1)">
+          <text>选择规格</text>
+          <text>{{ selectArrText }}</text>
         </view>
         <view class="info-item" @tap="openPopup('address')">
           <text>送至：</text>
           <text>北京市顺义区顺航路9号黑马程序员</text>
         </view>
       </view>
+      <vk-data-goods-sku-popup 
+      ref="skuPopup" 
+      v-model="skuShow"
+      :localdata="localdata"
+      :mode="modeSku"
+      add-cart-background-color="#FFA868"
+      buy-now-background-color="#27BA9B"
+      :actived-style="{
+          color: '#27BA9B',
+          borderColor: '#27BA9B',
+          backgroundColor: '#E9F8F5',
+        }"
+        @add-cart="addCart"
+       @buy-now="buyNow"
+      />
 
       <!-- 服务标签 -->
       <view class="service-tags" @tap="openPopup('service')">
@@ -66,18 +81,18 @@
       <view class=" specification">
         <text>客服</text>
       </view>
-      <view class=" specification">
+      <view class=" specification" @tap="gotoCart">
         <text>购物车</text>
       </view>
-      <view class="button add-to-cart">
+      <view class="button add-to-cart" @tap="openSkuPopup(2)">
         <text>加入购物车</text>
       </view>
-      <view class="button buy-now">
+      <view class="button buy-now" @tap="openSkuPopup(3)">
         <text>立即购买</text>
       </view>
     </view>
   </view>
-  <view class="similarGoods">
+  <!-- <view class="similarGoods">
     <view class="title">同类推荐</view>
     <view class="goods">
       <navigator v-for="i in goodsDetail.similarProducts" :key="i.id"
@@ -87,17 +102,18 @@
         <view class="price">￥{{ i.price }}</view>
       </navigator>
     </view>
-
-  </view>
+  </view> -->
 </template>
 
 <script setup>
 import { getGoodsDetail } from "@/service/category.js"
-import { ref } from "vue"
+import { addCartList } from "@/service/cart.js"
+import { ref,computed } from "vue"
 import { onLoad } from "@dcloudio/uni-app"
 import AddressPanel from './AddressPanel.vue'
 import ServicePanel from './ServicePanel.vue'
-
+const skuShow = ref(false)
+const localdata = ref({})
 // uni-ui 弹出层组件 ref
 const popup = ref()
 
@@ -119,6 +135,28 @@ const getDetail = async () => {
   const res = await getGoodsDetail(params.id)
   mainPictures.value = res.result.mainPictures
   goodsDetail.value = res.result
+  localdata.value={
+    _id:res.result.id,
+    name:res.result.name,
+    goods_thumb:res.result.mainPictures[0],
+    sku_list:res.result.skus.map(item=>{
+      return {
+        _id:item.id,
+        goods_id: res.result.id,
+        goods_name: res.result.namee,
+        image:item.picture,
+        price:item.price*100,
+        stock:item.inventory,
+        sku_name_arr:item.specs.map(v=>v.valueName)
+      }
+    }),
+    spec_list:res.result.specs.map(v=>{
+      return {
+        name:v.name,
+        list:v.values
+      }
+    })
+  }
 }
 const handleChange = (e) => {
   curIndex.value = e.detail.current
@@ -126,7 +164,31 @@ const handleChange = (e) => {
 onLoad(async () => {
   await getDetail()
 })
-
+const skuPopup=ref()
+const modeSku=ref()
+const openSkuPopup = (mode) => {
+  modeSku.value=mode
+  skuShow.value = true
+}
+const selectArrText = computed(() => {
+  return skuPopup.value?.selectArr?.join(' ').trim() || '请选择商品规格'
+})
+const addCart = async (e) => {
+  await addCartList({
+  skuId:e._id,
+  count:e.buy_num
+ })
+ uni.showToast({
+  title: '加入购物车成功',
+  icon: 'success'
+})
+  skuShow.value = false
+}
+const gotoCart=()=>{
+  uni.navigateTo({
+    url: '/pages/cart/cart'
+  })
+}
 </script>
 
 <style scoped lang="scss">
@@ -328,7 +390,10 @@ onLoad(async () => {
     left: 0;
     z-index: 100;
     background-color: #fff;
-
+    /* 关键代码：自动留出安全区距离 */
+      padding-bottom: env(safe-area-inset-bottom);
+      /* 兼容老设备 */
+      padding-bottom: constant(safe-area-inset-bottom);
     .button {
       width: 200rpx;
       height: 80rpx;
