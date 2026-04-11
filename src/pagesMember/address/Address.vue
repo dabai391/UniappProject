@@ -1,19 +1,19 @@
 <template>
   <uni-swipe-action class="addresslist">
-    <uni-swipe-action-item v-for="item in addressList" :key="item.id" class="address-item">
+    <uni-swipe-action-item v-for="item in addressList" :key="item.id" class="address-item" @tap="changeSelectedAddress(item)">
       <view class="address-header">
         <view class="name-phone">
           <text class="name">{{ item.receiver }}</text>
           <text class="phone">{{ item.contact }}</text>
           <text v-if="item.isDefault" class="default-tag">默认</text>
         </view>
-        <image class="edit" src="/static/my-icons/icon6.png" @tap="editAdress(item)"></image>
+        <image class="edit" src="/static/my-icons/icon6.png" @tap.stop="editAdress(item)"></image>
       </view>
       <view class="address-content">
         {{ item.fullLocation }} {{ item.address }}
       </view>
       <template #right>
-        <button class="delete-btn" @tap="deleteaddress(item)">删除</button>
+        <button class="delete-btn" @tap.stop="deleteaddress(item)">删除</button>
       </template>
     </uni-swipe-action-item>
   </uni-swipe-action>
@@ -24,6 +24,8 @@
 import { getAddressList,deleteAddress } from '@/service/my.js'
 import { ref } from 'vue'
 import { onShow } from '@dcloudio/uni-app'
+import adressStore from '@/store/adressStore.js'
+const adress = adressStore()
 
 //获取地址列表
 const addressList = ref([])
@@ -72,6 +74,12 @@ const deleteaddress =  (item) => {
     }
   })
 }
+//选择地址
+const changeSelectedAddress = (item) => {
+  adress.changeSelectedAddress(item)
+  uni.navigateBack()
+}
+
 </script>
 
 <style>

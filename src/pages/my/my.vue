@@ -24,8 +24,8 @@
     <view class="my-order">
       <view class="title">我的订单 <text>查看全部订单</text></view>
       <view class="tab">
-        <view v-for="item in orderTabs" :key="item.id">
-          <navigator url="/pages/order/order" open-type="navigate" hover-class="navigator-hover" class="orderitem">
+        <view v-for="item,index in orderTabs" :key="item.id">
+          <navigator :url="`/pagesOrder/orderlist/OrderList?state=${index+1}`"  open-type="navigate" hover-class="navigator-hover" class="orderitem" >
             <image :src="item.icon"></image>
             {{ item.name }}
           </navigator>
@@ -62,6 +62,8 @@ const handleUserInfo = () => {
     url: '/pagesMember/userinfo/UserInfo'
   })
 }
+
+
 </script>
 <style lang="scss">
 page {

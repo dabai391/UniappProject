@@ -10,7 +10,7 @@ const httpInterceptor = {
     if (!args.url.startsWith("https")) {
       args.url = baseUrl + args.url;
     }
-    args.timeout = 10000;
+    args.timeout = 20000;
     args.header = {
       "source-client": "miniapp",
     };

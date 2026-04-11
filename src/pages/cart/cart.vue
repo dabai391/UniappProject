@@ -104,9 +104,8 @@ const gotoPay = () => {
     })
     return
   }
-  uni.showToast({
-    title: '去结算',
-    icon: 'success'
+  uni.navigateTo({
+    url: '/pagesOrder/orderinfo/OrderInfo'
   })
 }
 </script>

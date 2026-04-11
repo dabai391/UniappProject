@@ -97,6 +97,44 @@
         }
        }
       ]
+    },
+    {
+      "root": "pagesOrder",
+      "pages": [
+        {
+          "path": "orderinfo/OrderInfo",
+          "style": {
+            "navigationBarTitleText": "订单信息",
+            "navigationBarBackgroundColor": "#fff",
+            "navigationBarTextStyle": "black"
+          }
+        },
+        {
+          "path": "orderdetail/OrderDetail",
+          "style": {
+            "navigationBarTitleText": "订单详情",
+            "navigationBarBackgroundColor": "#fff",
+            "navigationBarTextStyle": "black",
+            "navigationStyle": "custom"
+          }
+        },
+        {
+          "path": "payment/PayMemt",
+          "style": {
+            "navigationBarTitleText": "支付",
+            "navigationBarBackgroundColor": "#fff",
+            "navigationBarTextStyle": "black"
+          }
+        },
+        {
+          "path": "orderlist/OrderList",
+          "style": {
+            "navigationBarTitleText": "订单列表",
+            "navigationBarBackgroundColor": "#fff",
+                       "navigationBarTextStyle": "black"
+          }
+        }
+      ]
     }
 
   ],
@@ -106,6 +144,12 @@
 			"network": "all",
 			"packages": [
 				"pagesMember"
+			]
+		},
+		"pages/cart/cartMain": {
+			"network": "all",
+			"packages": [
+				"pagesOrder"
 			]
 		}
 	},

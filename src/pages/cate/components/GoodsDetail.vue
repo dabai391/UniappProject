@@ -51,7 +51,7 @@
           backgroundColor: '#E9F8F5',
         }"
         @add-cart="addCart"
-       @buy-now="buyNow"
+        @buy-now="buyNow"
       />
 
       <!-- 服务标签 -->
@@ -187,6 +187,11 @@ const addCart = async (e) => {
 const gotoCart=()=>{
   uni.navigateTo({
     url: '/pages/cart/cart'
+  })
+}
+const buyNow=  (selectShop)=>{
+  uni.navigateTo({
+    url: '/pagesOrder/orderinfo/OrderInfo?skuId='+selectShop.goods_id+'&count='+selectShop.buy_num
   })
 }
 </script>
