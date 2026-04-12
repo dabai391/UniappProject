@@ -1,29 +1,37 @@
 <template>
-  <uni-swipe-action class="cart-list" v-if="cartList.length">
-    <uni-swipe-action-item v-for="item in cartList" :key="item.skuId">
-      <view class="goodslist">
-        <checkbox :checked="item.selected" @tap="changeChecked(item)" />
-        <view class="image">
-          <image :src="item.picture" mode="scaleToFill" />
+  <view v-if="userStore.userInfo.token">
+    <uni-swipe-action class="cart-list" v-if="cartList.length">
+      <uni-swipe-action-item v-for="item in cartList" :key="item.skuId">
+        <view class="goodslist">
+          <checkbox :checked="item.selected" @tap="changeChecked(item)" />
+          <view class="image">
+            <image :src="item.picture" mode="scaleToFill" />
+          </view>
+          <view class="info">
+            <view class="name">{{ item.name }}</view>
+            <view class="spec">{{ item.attrsText }}</view>
+            <view class="price">¥{{ item.nowPrice }}</view>
+          </view>
+          <uni-number-box @change="changeValue(item)" v-model="item.count" class="count" :index="item.skuId" />
         </view>
-        <view class="info">
-          <view class="name">{{ item.name }}</view>
-          <view class="spec">{{ item.attrsText }}</view>
-          <view class="price">¥{{ item.nowPrice }}</view>
-        </view>
-        <uni-number-box @change="changeValue(item)" v-model="item.count" class="count" :index="item.skuId" />
+        <template #right>
+          <view class="delete">
+            <button class="delete-btn" @tap="deleteItem(item.skuId)">删除</button>
+          </view>
+        </template>
+      </uni-swipe-action-item>
+    </uni-swipe-action>
+    <view v-else>
+      <view class="empty">
+        <view class="empty-text">购物车为空，快去选购吧</view>
+        <button class="empty-btn">去首页</button>
       </view>
-      <template #right>
-        <view class="delete">
-          <button class="delete-btn" @tap="deleteItem(item.skuId)">删除</button>
-        </view>
-      </template>
-    </uni-swipe-action-item>
-  </uni-swipe-action>
+    </view>
+  </view>
   <view v-else>
     <view class="empty">
-      <view class="empty-text">购物车为空，快去选购吧</view>
-      <button class="empty-btn">去首页</button>
+      <view class="empty-text">您还没有登录，请先登录</view>
+      <button class="empty-btn" @tap="gotoLogin">去登录</button>
     </view>
   </view>
   <view class="total">
@@ -40,6 +48,8 @@
 import { ref, computed } from 'vue'
 import { getCartList, deleteCart, updateGoodsCount, updateCartSelected } from '@/service/cart.js'
 import { onShow } from '@dcloudio/uni-app'
+import useUserStore from '@/store/userStore.js'
+const userStore = useUserStore()
 const cartList = ref([])
 const getList = async () => {
   const res = await getCartList()
@@ -106,6 +116,12 @@ const gotoPay = () => {
   }
   uni.navigateTo({
     url: '/pagesOrder/orderinfo/OrderInfo'
+  })
+}
+// 跳转登录页
+const gotoLogin = () => {
+  uni.switchTab({
+    url: '/pages/my/my'
   })
 }
 </script>

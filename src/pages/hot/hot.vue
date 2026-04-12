@@ -1,4 +1,3 @@
-// /src/pages/hot/hot.vue
 <script setup>
 // 热门推荐页 标题和url
 import { getHot } from "@/service/hot.js";
@@ -76,7 +75,7 @@ const loadMore = async () => {
     <scroll-view scroll-y class="scroll-view" @scrolltolower="loadMore">
       <view class="goods">
         <navigator hover-class="none" class="navigator" v-for="goods in goodsList" :key="goods.id"
-          :url="`/pages/goods/goods?id=${goods.id}`">
+          :url="`/pages/cate/components/GoodsDetail?id=${goods.id}`">
           <image class="thumb" :src="goods.picture"></image>
           <view class="name ellipsis">{{ goods.name }}</view>
           <view class="price">

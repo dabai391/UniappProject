@@ -60,7 +60,6 @@ const changeIndex = (index) => {
     background-color: #fff;
     position: relative;
   }
-
   .state-item {
     flex: 1;
     text-align: center;

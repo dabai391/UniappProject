@@ -7,11 +7,13 @@
     </view>
     <view class="guess-list">
       <view class="guess-item" v-for="item in guesslist" :key="item.id">
+        <navigator hover-class="none" class="navigator" :url="`/pages/cate/components/GoodsDetail?id=${item.id}`">
         <view class="image">
           <image :src="item.picture" mode="aspectFill"></image>
         </view>
         <view class="name">{{ item.name }}</view>
         <view class="price">￥{{ item.price }}</view>
+      </navigator>
       </view>
     </view>
     <view class="no-more" v-if="isshow">

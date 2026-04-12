@@ -1,6 +1,6 @@
 <template>
   <view class="category-panel">
-    <view class="category-item" v-for="(item) in props.list" :key="item.id">
+    <view class="category-item" v-for="(item) in props.list" :key="item.id" @tap="goCate(item)">
       <image :src="item.icon" ></image>
       <view class="category-item-text">{{item.name}}</view>
     </view>
@@ -13,6 +13,11 @@ const props = defineProps({
     default: () => []
   }
 })
+const goCate=(item)=>{
+  uni.navigateTo({
+    url: "/pages/cate/cateMain?id=" + item.id
+  })
+}
 </script>
 <style scoped lang="scss">
 .category-panel{

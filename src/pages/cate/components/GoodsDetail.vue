@@ -1,6 +1,6 @@
 <template>
-  <view class="goods-detail">
-
+  <scroll-view scroll-y class="scroll-view">
+    <view class="goods-detail">
     <!-- 商品图片 -->
     <swiper class="goods-image" @change="handleChange" :circular="true">
       <swiper-item v-for="i in mainPictures" :key="i">
@@ -35,7 +35,8 @@
         </view>
         <view class="info-item" @tap="openPopup('address')">
           <text>送至：</text>
-          <text>北京市顺义区顺航路9号黑马程序员</text>
+          <text v-if="addressStoreInstance.addressList">{{ addressStoreInstance.addressList.receiver}} {{addressStoreInstance.addressList.fullLocation}}</text>
+          <text v-else>请选择地址</text>
         </view>
       </view>
       <vk-data-goods-sku-popup 
@@ -72,16 +73,31 @@
       <AddressPanel v-if="popupName === 'address'" @close="popup?.close()" />
       <ServicePanel v-if="popupName === 'service'" @close="popup?.close()" />
     </uni-popup>
-
+    <view class="similarGoods">
+      <view class="title">同类推荐</view>
+      <view class="navigator-list">
+      <navigator hover-class="none" class="navigator" v-for="item in goodsDetail.similarProducts" :key="item.id"
+        :url="`/pages/cate/components/GoodsDetail?id=${item.id}`">
+        <view class="image">
+          <image :src="item.picture" mode="aspectFill"></image>
+        </view>
+        <view class="name">{{ item.name }}</view>
+        <view class="price">￥{{ item.price }}</view>
+      </navigator>
+      </view>
+    </view>
     <!-- 操作按钮 -->
     <view class="action-buttons">
-      <view class=" collect">
+      <view class=" collect common">
+        <image src="@/static/my-icons/icon7.png" mode="aspectFill"></image>
         <text>收藏</text>
       </view>
-      <view class=" specification">
+      <view class=" specification common">
+        <image src="@/static/my-icons/icon8.png" mode="aspectFill"></image>
         <text>客服</text>
       </view>
-      <view class=" specification" @tap="gotoCart">
+      <view class=" specification common" @tap="gotoCart">
+        <image src="@/static/my-icons/icon9.png" mode="aspectFill"></image>
         <text>购物车</text>
       </view>
       <view class="button add-to-cart" @tap="openSkuPopup(2)">
@@ -92,17 +108,7 @@
       </view>
     </view>
   </view>
-  <!-- <view class="similarGoods">
-    <view class="title">同类推荐</view>
-    <view class="goods">
-      <navigator v-for="i in goodsDetail.similarProducts" :key="i.id"
-        :url="`/pages/cate/components/GoodsDetail?id=${i.id}`" class="goodsitem">
-        <image class="image" :src="i.picture"></image>
-        <view class="name">{{ i.name }}</view>
-        <view class="price">￥{{ i.price }}</view>
-      </navigator>
-    </view>
-  </view> -->
+  </scroll-view>
 </template>
 
 <script setup>
@@ -112,6 +118,10 @@ import { ref,computed } from "vue"
 import { onLoad } from "@dcloudio/uni-app"
 import AddressPanel from './AddressPanel.vue'
 import ServicePanel from './ServicePanel.vue'
+import adressStore from '@/store/adressStore.js'
+import  useUserStore  from '@/store/userStore.js'
+const userStore=useUserStore()
+const addressStoreInstance=adressStore()
 const skuShow = ref(false)
 const localdata = ref({})
 // uni-ui 弹出层组件 ref
@@ -120,6 +130,14 @@ const popup = ref()
 // 弹出层条件渲染
 const popupName = ref()
 const openPopup = (name) => {
+  if(name==='address'){
+   if(!userStore.userInfo.token){
+    return uni.showToast({
+      title: '您还没有登录，请先登录',
+      icon: 'none'
+    })
+   }
+  }
   // 修改弹出层名称
   popupName.value = name
   // 打开弹出层
@@ -194,9 +212,13 @@ const buyNow=  (selectShop)=>{
     url: '/pagesOrder/orderinfo/OrderInfo?skuId='+selectShop.goods_id+'&count='+selectShop.buy_num
   })
 }
+
 </script>
 
 <style scoped lang="scss">
+.scroll-view {
+  height: 100vh;
+}
 .goods-detail {
   background-color: #fff;
   padding: 0;
@@ -328,77 +350,73 @@ const buyNow=  (selectShop)=>{
       }
     }
   }
-
   .similarGoods {
-    width: 100%;
-    padding: 20rpx;
-
     .title {
-      font-size: 40rpx;
-      color: #333;
-      margin-bottom: 20rpx;
-    }
-
-    .goods {
-      display: flex;
-      flex-wrap: wrap;
-
-      .goodsitem {
-        width: calc(33.333% - 20rpx);
-        margin: 0 10rpx 20rpx;
+        font-size: 36rpx;
+        color: #333;
+        padding: 20rpx 10rpx;
+      }
+    .navigator-list {
+        width: 100%;
         display: flex;
-        flex-direction: column;
+        justify-content: space-between;
         align-items: center;
-        background-color: #fff;
-        border-radius: 10rpx;
-        padding: 15rpx;
-        box-sizing: border-box;
+        flex-wrap: wrap;
+        .navigator {
+          width: 30%;
+          margin-bottom: 20rpx;
+          background-color: #fff;
+          padding: 20rpx;
+          border-radius: 20rpx;
+          box-sizing: border-box;
+          box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.1);
 
-        .image {
-          width: 100%;
-          height: 200rpx;
-          border-radius: 10rpx;
-        }
-
-        .name {
-          margin-top: 10rpx;
-          font-size: 24rpx;
-          color: #333;
-          line-height: 1.3;
-          width: 100%;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-        }
-
-        .price {
-          margin-top: 10rpx;
-          font-size: 26rpx;
-          color: #ff4444;
-          width: 100%;
+          image {
+            width: 200rpx;
+            height: 200rpx;
+          }
+          .name {
+            font-size: 26rpx;
+            color: #333;
+          }
+          .price {
+            font-size: 30rpx;
+            color: #ff4444;
+          }
         }
       }
-    }
   }
+  
+ 
 
   .action-buttons {
     width: 100%;
-    height: 120rpx;
+    // height: 120rpx;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     border-top: 1rpx solid #f0f0f0;
-    position: fixed;
+    position: relative;
     bottom: 0;
     left: 0;
-    z-index: 100;
+    // z-index: 100;
     background-color: #fff;
     /* 关键代码：自动留出安全区距离 */
       padding-bottom: env(safe-area-inset-bottom);
       /* 兼容老设备 */
       padding-bottom: constant(safe-area-inset-bottom);
+      .common{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 28rpx;
+        color: #333;
+        image{
+          width: 60rpx;
+          height: 60rpx;
+        }
+      }
     .button {
       width: 200rpx;
       height: 80rpx;

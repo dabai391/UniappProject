@@ -25,6 +25,14 @@
       }
     },
     {
+      "path": "pages/cate/cateMain",
+      "style": {
+        "navigationBarTitleText": "商品分类",
+        "navigationBarBackgroundColor": "#fff",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
       "path": "pages/cart/cartMain",
       "style": { "navigationBarTitleText": "购物车" ,"navigationBarBackgroundColor":"#fff","navigationBarTextStyle": "black"}
     },

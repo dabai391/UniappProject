@@ -1,5 +1,5 @@
 // ServicePanel.vue
-<script setup lang="ts">
+<script setup>
 const emit = defineEmits(['close'])
 </script>
 
